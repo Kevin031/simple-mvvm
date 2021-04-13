@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MVVM框架原理</title>
+  <script src="./my-mvvm.js"></script>
+  <style>
+    body {
+      background-color: #000;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <div>
+      <h1 class="title" v-text="title"></h1>
+      <ul class="rule">
+        <li>1.xxx</li>
+        <li>2.xxx</li>
+        <li>3.xxx</li>
+      </ul>
+      <div class="person-info">
+        <img v-bind:src="person.avatar" v-bind:alt="person.alt">
+        <p>{{person.firstName}} {{person.lastName}}</p>
+        <p>年龄：{{person.age}}</p>
+        <p>简介：</p>
+        <p v-html="person.intro"></p>
+        <p>票数：{{person.votes}}</p>
+      </div>
+      <div>
+        <input v-model="voteValue">
+        <span>{{voteValue}}</span>
+        <button v-on:click="add">+1</button>
+        <button v-on:click="vote">投票</button>
+      </div>
+    </div>
+  </div>
+  <script>
+    const vm = new MVVM({
+      el: '#app',
+      data: {
+        title: 'MVVM原理',
+        person: {
+          firstName: '张',
+          lastName: '三',
+          age: 18,
+          avatar: 'https://unsplash.it/200/200?random',
+          alt: '头像',
+          intro: '<p>唱、跳、rap、<sapn style="color: red;">打篮球</span></p>',
+          votes: 0
+        },
+        voteValue: 0
+      },
+      methods: {
+        add () {
+          this.voteValue++
+        },
+
+        vote () {
+          this.person.votes += this.voteValue
+          this.voteValue = 0
+        }
+      }
+    })
+  </script>
+</body>
+</html>
